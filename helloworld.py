@@ -74,13 +74,11 @@ while(True):
                 final_hand.append('{} ({})'.format(card, "Inverted"))
             else:
                 final_hand.append('{}'.format(card))
-        message = '{} \n({})'.format(final_hand, datetime.now().strftime(format))
+        final_hand.append(datetime.now().strftime(format))
+        message = '1.) {0}\n2.) {1}\n3.) {2}\n\n{3}'.format(*final_hand)
         api.update_status(message)
         print(message)
     except TweepError:
         print('pass')
         pass
     time.sleep(900)
-
-
-
