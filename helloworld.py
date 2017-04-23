@@ -22,6 +22,10 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 
+# filename = open(argfile, 'r')
+# f = filename.readlines()
+# filename.close()
+
 format = '%Y-%m-%d %H:%M'
 
 
@@ -63,7 +67,14 @@ def deck():
 while(True):
     try:
         hand = random.sample(deck(), 3)
-        message = '{}\n({})'.format(hand, datetime.now().strftime(format))
+        final_hand = []
+        for card in hand:
+            orientation = random.sample(["", "Inverted"], 1)
+            if orientation[0] == "Inverted":
+                final_hand.append('{} ({})'.format(card, "Inverted"))
+            else:
+                final_hand.append('{}'.format(card))
+        message = '{} \n({})'.format(final_hand, datetime.now().strftime(format))
         api.update_status(message)
         print(message)
     except TweepError:
